@@ -1,6 +1,5 @@
 package com.nekkiichi.aplikasigithubuser.datas
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.nekkiichi.aplikasigithubuser.R
 import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
-import org.w3c.dom.Text
 
 class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
@@ -27,7 +25,17 @@ class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val UserItem = listGithubUser[position]
+        val userItem = listGithubUser[position]
+        //get img from string '@drawable/photo_name'
+        val profileImgName = userItem.img_url.split("/")[1]
+        val userImgContext = holder.ivProfile.context
+        val userImgId = userImgContext.resources.getIdentifier(profileImgName,"drawable",userImgContext.packageName)
+
+        holder.tvName.text = userItem.name
+        holder.tvUsername.text = userItem.username
+        holder.tvFollowerCount.text = userItem.follower_count.toString()
+        holder.tvRepoCount.text = userItem.repo_count.toString()
+        holder.ivProfile.setImageResource(userImgId)
     }
 
     override fun getItemCount(): Int {
