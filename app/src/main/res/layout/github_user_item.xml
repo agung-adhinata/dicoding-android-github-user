@@ -14,10 +14,8 @@
             android:id="@+id/iv_github_profile"
             android:layout_width="77dp"
             android:layout_height="match_parent"
-            android:textAlignment="center"
             android:src="@drawable/user2"
-            android:contentDescription="@string/profile_picture"
-            />
+            android:contentDescription="@string/username_template" />
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,13 +33,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/full_name_template"
-                    android:theme="@style/TextAppearance.AppCompat.Headline"
+                    style="@style/TextAppearance.AppCompat.Title"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/username_template"
                     android:id="@+id/tv_github_username"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     />
             </LinearLayout>
             <LinearLayout
@@ -52,16 +51,14 @@
                 >
                 <TextView
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/TextAppearance.AppCompat.Caption"
-                    android:text="@string/follower_count_template"/>
-                <TextView
                     android:id="@+id/tv_github_follower_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2sp"
-                    android:theme="@style/TextAppearance.AppCompat.Caption"
+                    android:text="@string/follower_count_template"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3sp"
                     android:text="@string/followers_with_coma"
                     />
                 <TextView
@@ -70,11 +67,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_template"
-                    android:theme="@style/TextAppearance.AppCompat.Caption"
                     />
                 <TextView
-                    android:layout_marginStart="2sp"
-                    android:theme="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_marginStart="3sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/repositories"/>
