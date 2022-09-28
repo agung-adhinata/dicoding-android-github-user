@@ -13,11 +13,11 @@ class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        var ivProfile: ImageView = itemView.findViewById(R.id.iv_github_profile)
+        var ivProfile: ImageView = itemView.findViewById(R.id.iv_github_profile)
         var tvName: TextView = itemView.findViewById(R.id.tv_github_name)
-//        var tvUsername: TextView = itemView.findViewById(R.id.tv_github_username)
-//        var tvFollowerCount: TextView = itemView.findViewById(R.id.tv_github_follower_count)
-//        var tvRepoCount: TextView = itemView.findViewById(R.id.tv_github_repo_count)
+        var tvUsername: TextView = itemView.findViewById(R.id.tv_github_username)
+        var tvFollowerCount: TextView = itemView.findViewById(R.id.tv_github_follower_count)
+        var tvRepoCount: TextView = itemView.findViewById(R.id.tv_github_repo_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -34,10 +34,10 @@ class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
 //        val userImgId = userImgContext.resources.getIdentifier(profileImgName,"drawable",userImgContext.packageName)
 
         holder.tvName.text = userItem.name
-//        holder.tvUsername.text = userItem.username
-//        holder.tvFollowerCount.text = userItem.follower.toString()
-//        holder.tvRepoCount.text = userItem.repository.toString()
-////        holder.ivProfile.setImageResource(userImgId)
+        holder.tvUsername.text = userItem.username
+        holder.tvFollowerCount.text = userItem.follower
+        holder.tvRepoCount.text = userItem.repository
+        holder.ivProfile.setImageResource(userItem.avatar)
     }
 
     override fun getItemCount(): Int {
