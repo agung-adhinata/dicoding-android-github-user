@@ -11,35 +11,38 @@ import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 
 class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ivProfile: ImageView = itemView.findViewById(R.id.iv_github_profile)
+
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+//        var ivProfile: ImageView = itemView.findViewById(R.id.iv_github_profile)
         var tvName: TextView = itemView.findViewById(R.id.tv_github_name)
-        var tvUsername: TextView = itemView.findViewById(R.id.tv_github_username)
-        var tvFollowerCount: TextView = itemView.findViewById(R.id.tv_github_follower_count)
-        var tvRepoCount: TextView = itemView.findViewById(R.id.tv_github_repo_count)
+//        var tvUsername: TextView = itemView.findViewById(R.id.tv_github_username)
+//        var tvFollowerCount: TextView = itemView.findViewById(R.id.tv_github_follower_count)
+//        var tvRepoCount: TextView = itemView.findViewById(R.id.tv_github_repo_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.github_user_item,parent,false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.github_user_item, parent, false)
         return ListViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val userItem = listGithubUser[position]
         //get img from string '@drawable/photo_name'
-        val profileImgName = userItem.img_url.split("/")[1]
-        val userImgContext = holder.ivProfile.context
-        val userImgId = userImgContext.resources.getIdentifier(profileImgName,"drawable",userImgContext.packageName)
+//        val profileImgName = userItem.avatar.split("/")[1]
+//        val userImgContext = holder.ivProfile.context
+//        val userImgId = userImgContext.resources.getIdentifier(profileImgName,"drawable",userImgContext.packageName)
 
         holder.tvName.text = userItem.name
-        holder.tvUsername.text = userItem.username
-        holder.tvFollowerCount.text = userItem.follower_count.toString()
-        holder.tvRepoCount.text = userItem.repo_count.toString()
-        holder.ivProfile.setImageResource(userImgId)
+//        holder.tvUsername.text = userItem.username
+//        holder.tvFollowerCount.text = userItem.follower.toString()
+//        holder.tvRepoCount.text = userItem.repository.toString()
+////        holder.ivProfile.setImageResource(userImgId)
     }
 
     override fun getItemCount(): Int {
         return listGithubUser.size
     }
+
 
 }
