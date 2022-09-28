@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nekkiichi.aplikasigithubuser.datas.ListGithubUserAdapter
 import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
-import com.nekkiichi.aplikasigithubuser.utils.getGithubLists
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var rvGithubUsers: RecyclerView
@@ -17,8 +16,9 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         rvGithubUsers = findViewById(R.id.rv_github_users)
-        Log.d("CREATION",list.toString())
         list.addAll(listGithubUser)
+
+        Log.d("CREATION",list.toString())
         showRecycleList()
     }
 
@@ -34,9 +34,10 @@ class HomeActivity : AppCompatActivity() {
         val dataLocation = resources.getStringArray(R.array.location)
         val listGithubUserItem = ArrayList<GithubUser>()
         for(i in dataUsername.indices) {
-            val gihubUser = GithubUser(dataUsername[i], dataName[i],dataAvatar.getResourceId(i,-1), dataCompany[i],dataLocation[i],dataRepo[i],dataFollower[i], dataFollowing[i])
+            val gihubUser = GithubUser("@"+dataUsername[i], dataName[i],dataAvatar.getResourceId(i,-1), dataCompany[i],dataLocation[i],dataRepo[i],dataFollower[i], dataFollowing[i])
             listGithubUserItem.add(gihubUser)
         }
+        dataAvatar.recycle()
         return  listGithubUserItem
     }
 
