@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cv_github_user_list_item"
+    android:layout_marginBottom="8dp"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingStart="8dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
+        android:paddingTop="8dp"
         android:paddingEnd="8dp"
-        >
+        android:paddingBottom="8dp">
         <ImageView
             android:id="@+id/iv_github_profile"
             android:layout_width="77dp"
