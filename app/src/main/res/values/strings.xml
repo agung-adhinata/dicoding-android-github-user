@@ -9,6 +9,7 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <string name="my_location">My Location</string>
 
     <string-array name="username">
         <item>JakeWharton</item>

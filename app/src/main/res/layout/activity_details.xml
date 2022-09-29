@@ -69,16 +69,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:foregroundTint="@color/purple_500"
-            android:foregroundTintMode="multiply"
-            app:srcCompat="@drawable/ic_round_location_city_24" />
+            app:srcCompat="@drawable/ic_round_location_city_24"
+            app:tint="?attr/colorOnBackground" />
 
         <TextView
             android:id="@+id/tv_github_user_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_weight="0"
-            android:text="My Location" />
+            android:text="@string/my_location" />
     </LinearLayout>
 
     <LinearLayout
