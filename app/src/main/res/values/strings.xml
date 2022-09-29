@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Aplikasi Github User</string>
-    <string name="full_name_template">Full Name</string>
+    <string name="full_name_template">Sample Name</string>
     <string name="username_template">humanoid</string>
     <string name="follower_count_template">1024</string>
     <string name="followers_with_coma">followers,</string>
-    <string name="repositories">repositories</string>
+    <string name="repositories">Repositories</string>
     <string name="number_template">23</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 
     <string-array name="username">
         <item>JakeWharton</item>
