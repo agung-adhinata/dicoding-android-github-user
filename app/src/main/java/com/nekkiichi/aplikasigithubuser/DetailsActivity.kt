@@ -15,6 +15,9 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details_activity)
 
+        //action bar settings
+        title = "User Detail"
+
         val githubUser = intent.getParcelableExtra(EXTRA_GITHUB_USER, GithubUser::class.java)
     }
 }
