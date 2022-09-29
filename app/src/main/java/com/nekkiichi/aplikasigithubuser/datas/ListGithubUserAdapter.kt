@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.R
 import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 
@@ -47,7 +48,8 @@ class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
         holder.tvUsername.text = userItem.username
         holder.tvFollowerCount.text = userItem.follower
         holder.tvRepoCount.text = userItem.repository
-        holder.ivProfile.setImageResource(userItem.avatar)
+
+        Glide.with(holder.itemView.context).load(userItem.avatar).into(holder.ivProfile)
     }
 
     override fun getItemCount(): Int {
