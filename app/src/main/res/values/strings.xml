@@ -3,7 +3,7 @@
     <string name="full_name_template">Sample Name</string>
     <string name="username_template">humanoid</string>
     <string name="follower_count_template">1024</string>
-    <string name="followers_with_coma">followers,</string>
+    <string name="followers_with_coma">Followers, </string>
     <string name="repositories">Repositories</string>
     <string name="number_template">23</string>
     <string name="profile_picture">Profile Picture</string>

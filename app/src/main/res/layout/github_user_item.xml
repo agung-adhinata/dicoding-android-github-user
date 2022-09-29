@@ -1,83 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_github_user_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cv_github_user_list_item"
-    android:layout_marginBottom="8dp"
+
     >
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/iv_github_profile"
+        android:layout_width="96dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/username_template"
+        android:src="@drawable/user2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_github_name"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
-        <ImageView
-            android:id="@+id/iv_github_profile"
-            android:layout_width="77dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/user2"
-            android:contentDescription="@string/username_template" />
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:id="@+id/tv_github_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/full_name_template"
-                    style="@style/TextAppearance.AppCompat.Title"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/username_template"
-                    android:id="@+id/tv_github_username"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                >
-                <TextView
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/full_name_template"
+        app:layout_constraintStart_toEndOf="@+id/iv_github_profile"
+        app:layout_constraintTop_toTopOf="parent" />
 
-                    android:id="@+id/tv_github_follower_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/follower_count_template"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3sp"
-                    android:text="@string/followers_with_coma"
-                    />
-                <TextView
-                    android:id="@+id/tv_github_repo_count"
-                    android:layout_marginStart="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/number_template"
-                    />
-                <TextView
-                    android:layout_marginStart="3sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/repositories"/>
-            </LinearLayout>
-        </LinearLayout>
+    <TextView
+        android:id="@+id/tv_github_username"
+        style="@style/JetBrainsMonoFontStyle.subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/username_template"
+        app:layout_constraintStart_toEndOf="@+id/iv_github_profile"
+        app:layout_constraintTop_toBottomOf="@+id/tv_github_name" />
 
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    <TextView
+
+        android:id="@+id/tv_github_follower_count"
+        style="@style/JetBrainsMonoFontStyle.Count"
+        android:layout_width="0dp"
+        android:textFontWeight="700"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/follower_count_template"
+        app:layout_constraintBottom_toTopOf="@+id/tv_github_repo_count"
+        app:layout_constraintStart_toEndOf="@+id/iv_github_profile" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/JetBrainsMonoFontStyle.Text"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/followers"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/tv_github_follower_count" />
+
+    <TextView
+        android:id="@+id/tv_github_repo_count"
+        style="@style/JetBrainsMonoFontStyle.Count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:textFontWeight="700"
+        android:text="@string/number_template"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_github_profile" />
+
+    <TextView
+        style="@style/JetBrainsMonoFontStyle.Text"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/repositories"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_github_repo_count" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
