@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.core.os.HandlerCompat.postDelayed
 
 class MainActivity : AppCompatActivity() {
 
-    private val delay=2000
+    private val delayMs=2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +17,6 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
-        }, delay.toLong())
+        }, delayMs.toLong())
     }
 }
