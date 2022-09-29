@@ -5,14 +5,11 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="16sp"
     tools:context=".MainActivity">
-
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/jetbrains_mono_nl_regular"
-        android:text="@string/app_name"
-        android:textAlignment="center" />
+        android:src="@drawable/splash"/>
 </LinearLayout>
