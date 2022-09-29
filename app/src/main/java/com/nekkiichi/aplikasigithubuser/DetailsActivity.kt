@@ -1,12 +1,10 @@
 package com.nekkiichi.aplikasigithubuser
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 
@@ -21,11 +19,11 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var mvFollowing: TextView
     lateinit var mvRepo: TextView
     lateinit var ivAvatar: ImageView
+    lateinit var tvLocation: TextView
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details_activity)
+        setContentView(R.layout.activity_details)
 
         //action bar settings
         title = "User Detail"
@@ -37,10 +35,9 @@ class DetailsActivity : AppCompatActivity() {
         mvFollower = findViewById(R.id.tv_github_follower_count)
         mvFollowing = findViewById(R.id.tv_github_following_count)
         mvRepo = findViewById(R.id.tv_github_repo_count)
-        val githubUser = intent.getParcelableExtra(EXTRA_GITHUB_USER, GithubUser::class.java)
-        if(githubUser!=null) {
-            fillAllSystem(githubUser)
-        }
+        tvLocation = findViewById(R.id.tv_github_user_location)
+        val githubUser = intent.getParcelableExtra<GithubUser>(EXTRA_GITHUB_USER)!!
+        fillAllSystem(githubUser)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -59,6 +56,7 @@ class DetailsActivity : AppCompatActivity() {
         mvFollower.text = data.follower
         mvRepo.text = data.repository
         mvUsername.text = data.username
+        tvLocation.text = data.location
 
         Glide.with(this).load(data.avatar).circleCrop().into(ivAvatar)
     }
