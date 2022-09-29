@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="my_dark">#FF333333</color>
     <color name="my_light">#FFDDDDDD</color>
+
+    <color name="sky_200">#FF8bbeb2</color>
+    <color name="sky_500">#FF384e77</color>
+    <color name="sky_700">#FF18314f</color>
+
+    <color name="leaf_200">#FFe6f9af</color>
+    <color name="leaf_700">#7D885E</color>
 </resources>
