@@ -12,7 +12,16 @@ import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
 
+    interface OnItemClickCallback{fun onItemClicked(data:GithubUser)}
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         var ivProfile: ImageView = itemView.findViewById(R.id.iv_github_profile)
         var tvName: TextView = itemView.findViewById(R.id.tv_github_name)
         var tvUsername: TextView = itemView.findViewById(R.id.tv_github_username)
@@ -28,10 +37,11 @@ class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val userItem = listGithubUser[position]
-        //get img from string '@drawable/photo_name'
-//        val profileImgName = userItem.avatar.split("/")[1]
-//        val userImgContext = holder.ivProfile.context
-//        val userImgId = userImgContext.resources.getIdentifier(profileImgName,"drawable",userImgContext.packageName)
+
+        // get data when clicked, based on index number recycleview
+        holder.itemView.setOnClickListener{
+            onItemClickCallback.onItemClicked(listGithubUser[holder.adapterPosition])
+        }
 
         holder.tvName.text = userItem.name
         holder.tvUsername.text = userItem.username

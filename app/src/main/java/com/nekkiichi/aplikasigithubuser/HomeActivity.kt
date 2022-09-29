@@ -1,5 +1,6 @@
 package com.nekkiichi.aplikasigithubuser
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import com.nekkiichi.aplikasigithubuser.datas.ListGithubUserAdapter
 import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 
 class HomeActivity : AppCompatActivity() {
+    //setup intent extras
+
     private lateinit var rvGithubUsers: RecyclerView
     private var list: ArrayList<GithubUser> = arrayListOf()
 
@@ -47,5 +50,16 @@ class HomeActivity : AppCompatActivity() {
         rvGithubUsers.layoutManager = LinearLayoutManager(this)
         val listGithubUserAdapter = ListGithubUserAdapter(list)
         rvGithubUsers.adapter = listGithubUserAdapter
+
+        listGithubUserAdapter.setOnItemClickCallback(object :ListGithubUserAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: GithubUser) {
+                showGithubUserDetails(data)
+            }
+        })
+    }
+    private fun showGithubUserDetails(data: GithubUser) {
+        val newIntent = Intent(this,DetailsActivity::class.java)
+        newIntent.putExtra(DetailsActivity.EXTRA_GITHUB_USER,data)
+        startActivity(newIntent)
     }
 }
