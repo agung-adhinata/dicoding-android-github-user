@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.nekkiichi.aplikasigithubuser.datas.ListGithubUserAdapter
+import com.nekkiichi.aplikasigithubuser.adapter.ListGithubUserAdapter
 import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 
 class HomeActivity : AppCompatActivity() {
@@ -43,15 +43,13 @@ class HomeActivity : AppCompatActivity() {
         dataAvatar.recycle()
         return  listGithubUserItem
     }
-
-
     //functions
     private fun showRecycleList() {
         rvGithubUsers.layoutManager = LinearLayoutManager(this)
         val listGithubUserAdapter = ListGithubUserAdapter(list)
         rvGithubUsers.adapter = listGithubUserAdapter
 
-        listGithubUserAdapter.setOnItemClickCallback(object :ListGithubUserAdapter.OnItemClickCallback{
+        listGithubUserAdapter.setOnItemClickCallback(object : ListGithubUserAdapter.OnItemClickCallback{
             override fun onItemClicked(data: GithubUser) {
                 showGithubUserDetails(data)
             }

@@ -1,4 +1,4 @@
-package com.nekkiichi.aplikasigithubuser.datas
+package com.nekkiichi.aplikasigithubuser.adapter
 
 import android.view.LayoutInflater
 import android.view.View

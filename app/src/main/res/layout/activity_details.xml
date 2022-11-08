@@ -13,7 +13,7 @@
     <ImageView
         android:id="@+id/iv_github_profile"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -22,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tv_github_fullname"
         style="@style/TextAppearance.AppCompat.Display1"
@@ -103,7 +102,6 @@
             <TextView
                 android:id="@+id/tv_github_follower_count"
                 style="@style/JetBrainsMonoFontStyle.Count"
-                android:textFontWeight="700"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/follower_count_template" />
@@ -124,7 +122,6 @@
             <TextView
                 android:id="@+id/tv_github_following_count"
                 style="@style/JetBrainsMonoFontStyle.Count"
-                android:textFontWeight="700"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/follower_count_template" />
@@ -145,7 +142,6 @@
             <TextView
                 android:id="@+id/tv_github_repo_count"
                 style="@style/JetBrainsMonoFontStyle.Count"
-                android:textFontWeight="700"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/follower_count_template" />
@@ -155,6 +151,38 @@
                 android:layout_height="wrap_content"
                 android:text="@string/repositories" />
         </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuesday" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
