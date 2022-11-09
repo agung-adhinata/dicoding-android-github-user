@@ -8,8 +8,6 @@ import com.nekkiichi.aplikasigithubuser.datas.ResponseUsers
 import com.nekkiichi.aplikasigithubuser.datas.UserDetail
 import com.nekkiichi.aplikasigithubuser.datas.UserItem
 import com.nekkiichi.aplikasigithubuser.services.ApiConfig
-import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
-import okhttp3.internal.toImmutableList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,7 +44,6 @@ class MainViewModel : ViewModel() {
                     Log.e(MainViewModel.TAG, "onResponse Failed: ${response.message()}")
                 }
             }
-
             override fun onFailure(call: Call<ResponseUsers>, t: Throwable) {
                 Log.e(MainViewModel.TAG, t.message.toString())
             }

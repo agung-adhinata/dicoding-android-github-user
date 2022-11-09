@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.databinding.ActivityDetailsBinding
 import com.nekkiichi.aplikasigithubuser.datas.UserDetail
 import com.nekkiichi.aplikasigithubuser.datas.UserItem
+import com.nekkiichi.aplikasigithubuser.datas.models.DetailViewModel
 import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
 
 class DetailsActivity : AppCompatActivity() {
@@ -17,12 +20,18 @@ class DetailsActivity : AppCompatActivity() {
         const val EXTRA_USER_DETAIL = "extra_user_detail"
     }
     lateinit var binding: ActivityDetailsBinding
+    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+
+        viewModel.userDetail.observe(this) {
+
+        }
+
         //action bar settings
         title = "User Detail"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
