@@ -3,41 +3,41 @@ package com.nekkiichi.aplikasigithubuser
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
+import com.nekkiichi.aplikasigithubuser.databinding.ActivityDetailsBinding
+import com.nekkiichi.aplikasigithubuser.datas.UserDetail
+import com.nekkiichi.aplikasigithubuser.datas.UserItem
+import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
 
 class DetailsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_GITHUB_USER = "extra_github_user"
+        const val EXTRA_USER_DETAIL = "extra_user_detail"
     }
-
-    lateinit var mvName: TextView
-    lateinit var mvUsername: TextView
-    lateinit var mvFollower: TextView
-    lateinit var mvFollowing: TextView
-    lateinit var mvRepo: TextView
-    lateinit var ivAvatar: ImageView
-    lateinit var tvLocation: TextView
+    lateinit var binding: ActivityDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
 
+        setContentView(binding.root)
         //action bar settings
         title = "User Detail"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        mvUsername = findViewById(R.id.tv_github_username)
-        mvName = findViewById(R.id.tv_github_fullname)
-        ivAvatar = findViewById(R.id.iv_github_profile)
-        mvFollower = findViewById(R.id.tv_github_follower_count)
-        mvFollowing = findViewById(R.id.tv_github_following_count)
-        mvRepo = findViewById(R.id.tv_github_repo_count)
-        tvLocation = findViewById(R.id.tv_github_user_location)
-        val githubUser = intent.getParcelableExtra<GithubUser>(EXTRA_GITHUB_USER)!!
-        fillAllSystem(githubUser)
+        //intent receiver
+        val data = intent.getParcelableExtra<UserItem>(EXTRA_USER_DETAIL) as UserItem
+        ApiWrapper().getUserDetail(data.login.toString(), object : ApiWrapper.OnGetUserListener{
+            override fun onGetUserSuccess(item: UserDetail) {
+                fillAllSystem(item);
+            }
+
+            override fun onGetUserFailed(item: String) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -49,15 +49,21 @@ class DetailsActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    private fun fillAllSystem(data: GithubUser) {
-        mvName.text = data.name
-        mvFollowing.text = data.following
-        mvFollower.text = data.follower
-        mvRepo.text = data.repository
-        mvUsername.text = data.username
-        tvLocation.text = data.location
-
-        Glide.with(this).load(data.avatar).circleCrop().into(ivAvatar)
+    private fun fillAllSystem(data: UserDetail) {
+        binding.progressBar.visibility = View.GONE
+        binding.tvGithubFullname.text = data.name
+        binding.tvGithubFollowingCount.text = data.following.toString()
+        binding.tvGithubFollowerCount.text = data.followers.toString()
+        binding.tvGithubRepoCount.text = data.publicRepos.toString()
+        binding.tvGithubUsername.text = data.login
+        binding.tvGithubUserLocation.text = data.location
+        Glide.with(this).load(data.avatarUrl).circleCrop().into(binding.ivGithubProfile)
+    }
+    private fun showLoading(b: Boolean) {
+        if(b) {
+            binding.apply {
+                progressBar.visibility = View.VISIBLE
+            }
+        }
     }
 }

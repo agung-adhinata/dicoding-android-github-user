@@ -8,13 +8,14 @@ import com.nekkiichi.aplikasigithubuser.datas.ResponseUsers
 import com.nekkiichi.aplikasigithubuser.datas.UserDetail
 import com.nekkiichi.aplikasigithubuser.datas.UserItem
 import com.nekkiichi.aplikasigithubuser.services.ApiConfig
+import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
+import okhttp3.internal.toImmutableList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel : ViewModel() {
     companion object {
-        val USERNAME = "username"
         val TAG = "MainViewModel"
         val Q_DEFAULT = "a"
     }
@@ -22,63 +23,34 @@ class MainViewModel : ViewModel() {
     private val _userList = MutableLiveData<List<UserItem>>()
     val userList: LiveData<List<UserItem>> = _userList
 
-    private val _userDetailList = MutableLiveData<MutableList<UserDetail>>()
-    val userDetailList: LiveData<MutableList<UserDetail>> = _userDetailList
+    private val _userDetailList = MutableLiveData<List<UserDetail>>()
+    val userDetailList: LiveData<List<UserDetail>> = _userDetailList
 
-    private val _isLoading = MutableLiveData<Boolean>()
+    private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
 
     init {
-        getUsers(Q_DEFAULT)
-        getDetailUsers()
+        getRawUsers(Q_DEFAULT)
     }
-
-    private fun getUsers(q: String) {
+    private fun getRawUsers(q: String) {
         _isLoading.value = true
-        val client =
-            ApiConfig.getApiService().getListUsers(q).enqueue(object : Callback<ResponseUsers> {
-
-                override fun onResponse(
-                    call: Call<ResponseUsers>,
-                    response: Response<ResponseUsers>
-                ) {
+        ApiConfig.getApiService().getListUsers(q).enqueue(object : Callback<ResponseUsers> {
+            override fun onResponse(
+                call: Call<ResponseUsers>,
+                response: Response<ResponseUsers>
+            ) {
+                if (response.isSuccessful) {
                     _isLoading.value = false
-                    if (response.isSuccessful) {
-                        _userList.value = response.body()?.items
-                    } else {
-                        Log.e(TAG, "onResponse Failed: ${response.message()}")
-                    }
+                    _userList.value = response.body()?.items
+                } else {
+                    Log.e(MainViewModel.TAG, "onResponse Failed: ${response.message()}")
                 }
+            }
 
-                override fun onFailure(call: Call<ResponseUsers>, t: Throwable) {
-                    _isLoading.value = false
-                    Log.e(TAG, t.message.toString())
-                }
-            })
-    }
+            override fun onFailure(call: Call<ResponseUsers>, t: Throwable) {
+                Log.e(MainViewModel.TAG, t.message.toString())
+            }
+        })
 
-    fun getDetailUsers() {
-        _isLoading.value = true
-        _userDetailList.value = mutableListOf()
-        _userList.value?.forEach {
-            ApiConfig.getApiService().getUser(it.login.toString())
-                .enqueue(object : Callback<UserDetail> {
-                    override fun onResponse(
-                        call: Call<UserDetail>,
-                        response: Response<UserDetail>
-                    ) {
-                        if (response.isSuccessful) {
-                            _userDetailList.value?.add(response.body()!!)
-                        } else {
-                            Log.e(TAG, "onResponse Failure ${response.message()}")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<UserDetail>, t: Throwable) {
-                        Log.e(TAG, "onFailure ${t.message}")
-                    }
-                })
-        }
-        _isLoading.value = false
     }
 }

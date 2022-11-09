@@ -1,7 +1,10 @@
 package com.nekkiichi.aplikasigithubuser.datas
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserDetail (
     @SerializedName("login"               ) var login             : String?  = null,
     @SerializedName("id"                  ) var id                : Int?     = null,
@@ -35,4 +38,4 @@ data class UserDetail (
     @SerializedName("following"           ) var following         : Int?     = null,
     @SerializedName("created_at"          ) var createdAt         : String?  = null,
     @SerializedName("updated_at"          ) var updatedAt         : String?  = null
-        )
+        ):Parcelable
