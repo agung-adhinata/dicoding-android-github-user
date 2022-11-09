@@ -13,11 +13,13 @@ import com.nekkiichi.aplikasigithubuser.datasGithubUser.GithubUser
 class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
 
-    interface OnItemClickCallback{fun onItemClicked(data:GithubUser)}
+    interface OnItemClickCallback {
+        fun onItemClicked(data: GithubUser)
+    }
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
@@ -40,7 +42,7 @@ class ListGithubUserAdapter(private val listGithubUser: ArrayList<GithubUser>) :
         val userItem = listGithubUser[position]
 
         // get data when clicked, based on index number recycleview
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(listGithubUser[holder.adapterPosition])
         }
 
