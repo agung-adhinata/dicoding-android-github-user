@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,9 +19,7 @@ import com.nekkiichi.aplikasigithubuser.datas.UserItem
 import com.nekkiichi.aplikasigithubuser.datas.models.MainViewModel
 
 class HomeActivity : AppCompatActivity() {
-    //setup intent extras
-
-    lateinit var binding : ActivityHomeBinding
+    private lateinit var binding : ActivityHomeBinding
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,9 +68,27 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.search_hint)
+        searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchUserList(query ?:"")
+                searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+    return false
+            }
+
+        } )
         return true
     }
 
@@ -85,7 +102,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun searchSetup() {
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
     }
 }
 

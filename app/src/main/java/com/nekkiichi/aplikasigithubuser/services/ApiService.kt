@@ -15,10 +15,10 @@ interface ApiService {
     @GET("search/users")
     fun getListUsers(
         @Query("q") q: String,
-        @Query("per_page") perPage: Int = 10
+        @Query("per_page") perPage: Int = 20
     ): Call<ResponseUsers>
 
-    @Headers("Accept: application/vnd.github+json")
+    @Headers("Accept: application/vnd.github+json","Authorization: Bearer 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")
     @GET("users/{username}")
     fun getUser(
         @Path("username") username: String

@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/search"
         android:iconTint="?attr/colorOnPrimary"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|always"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always"
         tools:targetApi="o" />
 </menu>

@@ -20,20 +20,17 @@ class MainViewModel : ViewModel() {
 
     private val _userList = MutableLiveData<List<UserItem>>()
     val userList: LiveData<List<UserItem>> = _userList
-
-    private val _userDetailList = MutableLiveData<List<UserDetail>>()
-    val userDetailList: LiveData<List<UserDetail>> = _userDetailList
-
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
     private val _errorMsg = MutableLiveData<String>()
     val errorMsg :LiveData<String> = _errorMsg
 
     init {
-        getRawUsers(Q_DEFAULT)
+        searchUserList(Q_DEFAULT)
     }
-    private fun getRawUsers(q: String) {
+    fun searchUserList(q: String) {
         _isLoading.value = true
+        _userList.value = listOf()
         ApiConfig.getApiService().getListUsers(q).enqueue(object : Callback<ResponseUsers> {
             override fun onResponse(
                 call: Call<ResponseUsers>,
