@@ -18,7 +18,7 @@ class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: UserItem)
+        fun onItemClicked(data: UserDetail)
     }
 
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -46,9 +46,7 @@ class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
         holder.tvFollowerCount.text = "..."
         holder.tvRepoCount.text = "..."
         // get data when clicked, based on index number recycleview
-        holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(listGithubUser[holder.adapterPosition])
-        }
+
 
         holder.tvName.text = userItem.login
         holder.tvUsername.text = userItem.login
@@ -59,6 +57,9 @@ class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
                 Log.d("List", "done")
                 holder.tvFollowerCount.text = item.followers.toString()
                 holder.tvRepoCount.text = item.publicRepos.toString()
+                holder.itemView.setOnClickListener {
+                    onItemClickCallback.onItemClicked(item)
+                }
             }
 
             override fun onGetUserFailed(item: String) {

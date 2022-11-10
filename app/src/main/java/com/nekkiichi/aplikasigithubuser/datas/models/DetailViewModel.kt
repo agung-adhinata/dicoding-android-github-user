@@ -15,8 +15,9 @@ class DetailViewModel : ViewModel() {
     val userDetail: LiveData<UserDetail> = _userDetails
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
-    init {
-        getUserDetail("q")
+    // retrieve user detail variabel from Parcelable into this view model
+    fun retrieveUserDetail(data: UserDetail) {
+        _userDetails.value = data
     }
     fun getUserDetail(username: String) {
         ApiConfig.getApiService().getUser(username).enqueue(

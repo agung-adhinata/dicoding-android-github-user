@@ -26,6 +26,8 @@ class MainViewModel : ViewModel() {
 
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
+    private val _errorMsg = MutableLiveData<String>()
+    val errorMsg :LiveData<String> = _errorMsg
 
     init {
         getRawUsers(Q_DEFAULT)
@@ -37,15 +39,18 @@ class MainViewModel : ViewModel() {
                 call: Call<ResponseUsers>,
                 response: Response<ResponseUsers>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
-                    _isLoading.value = false
                     _userList.value = response.body()?.items
                 } else {
-                    Log.e(MainViewModel.TAG, "onResponse Failed: ${response.message()}")
+                    _errorMsg.value = response.message()
+                    Log.e(TAG, "onResponse Failed: ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<ResponseUsers>, t: Throwable) {
-                Log.e(MainViewModel.TAG, t.message.toString())
+                _isLoading.value = false
+                _errorMsg.value = t.message.toString()
+                Log.e(TAG, t.message.toString())
             }
         })
 

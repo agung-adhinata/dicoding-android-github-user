@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.databinding.ActivityDetailsBinding
 import com.nekkiichi.aplikasigithubuser.datas.UserDetail
 import com.nekkiichi.aplikasigithubuser.datas.UserItem
 import com.nekkiichi.aplikasigithubuser.datas.models.DetailViewModel
-import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
 
 class DetailsActivity : AppCompatActivity() {
     companion object {
@@ -31,24 +28,15 @@ class DetailsActivity : AppCompatActivity() {
             showLoading(it)
         }
         viewModel.userDetail.observe(this) {
-            fillAllSystem(it)
+            setGithubUserView(it)
         }
-
         //action bar settings
         title = "User Detail"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //intent receiver
-        val data = intent.getParcelableExtra<UserItem>(EXTRA_USER_DETAIL) as UserItem
-        ApiWrapper().getUserDetail(data.login.toString(), object : ApiWrapper.OnGetUserListener{
-            override fun onGetUserSuccess(item: UserDetail) {
-                fillAllSystem(item);
-            }
-
-            override fun onGetUserFailed(item: String) {
-                TODO("Not yet implemented")
-            }
-        })
+        val data = intent.getParcelableExtra<UserItem>(EXTRA_USER_DETAIL) as UserDetail
+        viewModel.retrieveUserDetail(data)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,7 +48,7 @@ class DetailsActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-    private fun fillAllSystem(data: UserDetail) {
+    private fun setGithubUserView(data: UserDetail) {
         binding.progressBar.visibility = View.GONE
         binding.tvGithubFullname.text = data.name
         binding.tvGithubFollowingCount.text = data.following.toString()
@@ -74,6 +62,10 @@ class DetailsActivity : AppCompatActivity() {
         if(b) {
             binding.apply {
                 progressBar.visibility = View.VISIBLE
+            }
+        }else{
+            binding.apply {
+                progressBar.visibility = View.GONE
             }
         }
     }

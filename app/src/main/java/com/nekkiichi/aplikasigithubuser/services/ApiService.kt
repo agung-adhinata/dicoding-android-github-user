@@ -11,14 +11,14 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @Headers("Accept: application/vnd.github+json","Authorization: Bearer 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")
+    @Headers("Accept: application/vnd.github+json")
     @GET("search/users")
     fun getListUsers(
         @Query("q") q: String,
         @Query("per_page") perPage: Int = 10
     ): Call<ResponseUsers>
 
-    @Headers("Accept: application/vnd.github+json","Authorization: Bearer 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")
+    @Headers("Accept: application/vnd.github+json")
     @GET("users/{username}")
     fun getUser(
         @Path("username") username: String

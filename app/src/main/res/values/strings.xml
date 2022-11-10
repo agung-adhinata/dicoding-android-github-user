@@ -12,4 +12,5 @@
     <string name="my_location">My Location</string>
     <string name="load_text">loading data</string>
     <string name="blank" />
+    <string name="search">search</string>
 </resources>
