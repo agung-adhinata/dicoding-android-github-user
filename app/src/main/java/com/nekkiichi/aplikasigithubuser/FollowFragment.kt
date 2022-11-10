@@ -6,21 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.nekkiichi.aplikasigithubuser.datas.models.DetailViewModel
 import com.nekkiichi.aplikasigithubuser.datas.models.MainViewModel
 
 class FollowFragment : Fragment() {
     private var username: String? = null
-    private val viewModel: MainViewModel by activityViewModels()
+    private var isFollower = false
+    private val viewModel: DetailViewModel by activityViewModels()
     companion object {
         val USERNAME = "username"
+        val IS_FOLLOWER = "is_follower"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             username = it.getString(USERNAME)
+            isFollower = it.getBoolean(IS_FOLLOWER)
         }
-        username?.let { viewModel.searchUserList(it) }
     }
 
     override fun onCreateView(
