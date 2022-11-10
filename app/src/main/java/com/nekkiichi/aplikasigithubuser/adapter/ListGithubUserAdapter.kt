@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.R
+import com.nekkiichi.aplikasigithubuser.databinding.GithubUserItemBinding
 import com.nekkiichi.aplikasigithubuser.datas.UserDetail
 import com.nekkiichi.aplikasigithubuser.datas.UserItem
 import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
@@ -36,6 +37,7 @@ class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        val binding = GithubUserItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.github_user_item, parent, false)
         return ListViewHolder(view)
