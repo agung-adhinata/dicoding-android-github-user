@@ -20,16 +20,18 @@ class DetailsActivity : AppCompatActivity() {
         const val EXTRA_USER_DETAIL = "extra_user_detail"
     }
     lateinit var binding: ActivityDetailsBinding
-    private lateinit var viewModel: DetailViewModel
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
         viewModel.userDetail.observe(this) {
-
+            fillAllSystem(it)
         }
 
         //action bar settings

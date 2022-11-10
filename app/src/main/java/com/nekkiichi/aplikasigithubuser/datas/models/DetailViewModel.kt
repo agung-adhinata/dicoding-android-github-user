@@ -13,7 +13,6 @@ import retrofit2.Response
 class DetailViewModel : ViewModel() {
     private val _userDetails = MutableLiveData<UserDetail>()
     val userDetail: LiveData<UserDetail> = _userDetails
-
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
     init {
