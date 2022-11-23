@@ -42,7 +42,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
-    private fun showSearchResult(result: com.nekkiichi.aplikasigithubuser.data.Result<List<UserItem>>) {
+    private fun showSearchResult(result: Result<List<UserItem>>) {
         when(result) {
             is Result.loading -> setLoading(true)
             is Result.Error -> {

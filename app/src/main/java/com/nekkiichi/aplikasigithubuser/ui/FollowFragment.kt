@@ -5,13 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nekkiichi.aplikasigithubuser.adapter.ListGithubUserAdapter
 import com.nekkiichi.aplikasigithubuser.databinding.FragmentFollowBinding
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
 import com.nekkiichi.aplikasigithubuser.data.models.DetailViewModel
+import kotlinx.coroutines.launch
 
 class FollowFragment : Fragment() {
     private var username: String? = null
@@ -45,20 +50,37 @@ class FollowFragment : Fragment() {
             else
                 viewModel.getUserFollowing(it)
         }
-        if(isFollower) {
-            viewModel.userFollower.observe(this.viewLifecycleOwner) {
-                    createRecycleView(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    if(isFollower) {
+                        viewModel.userFollowerFlow.collect {
+                            retrieveData(it);
+                        }
+                    }else {
+                        viewModel.userFollowingFlow.collect{
+                            retrieveData(it)
+                        }
+                    }
+                }
             }
-        }else {
-            viewModel.userFollowing.observe(this.viewLifecycleOwner) {
-                    createRecycleView(it)
-            }
-        }
-        viewModel.isLoadingFollow.observe(this.viewLifecycleOwner) {
-            showLoading(it)
         }
         // Inflate the layout for this fragment
         return binding.root
+    }
+    private fun retrieveData(data: com.nekkiichi.aplikasigithubuser.data.Result<List<UserItem>>) {
+        when (data) {
+            com.nekkiichi.aplikasigithubuser.data.Result.loading -> showLoading(true)
+            is com.nekkiichi.aplikasigithubuser.data.Result.Error->
+            {
+                showLoading(false)
+            }
+            is com.nekkiichi.aplikasigithubuser.data.Result.Success ->
+            {
+                showLoading(false)
+                createRecycleView(data.data)
+            }
+        }
     }
     private fun createRecycleView(data: List<UserItem>) {
         val layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL,false)
