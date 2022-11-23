@@ -1,4 +1,4 @@
-package com.nekkiichi.aplikasigithubuser
+package com.nekkiichi.aplikasigithubuser.ui
 
 import android.app.SearchManager
 import android.content.Context
@@ -9,14 +9,19 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nekkiichi.aplikasigithubuser.R
+import com.nekkiichi.aplikasigithubuser.data.Result
 import com.nekkiichi.aplikasigithubuser.adapter.ListGithubUserAdapter
 import com.nekkiichi.aplikasigithubuser.databinding.ActivityHomeBinding
-import com.nekkiichi.aplikasigithubuser.datas.UserDetail
-import com.nekkiichi.aplikasigithubuser.datas.UserItem
-import com.nekkiichi.aplikasigithubuser.datas.models.MainViewModel
+import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
+import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
+import com.nekkiichi.aplikasigithubuser.data.models.MainViewModel
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
@@ -27,19 +32,26 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.isLoading.observe(this) {
-            setLoading(it)
-            if(it == false) {
-                Toast.makeText(this, "done", Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.users.collect {
+                        showSearchResult(it)
+                    }
+                }
             }
         }
-        viewModel.userList.observe(this) {
-            showRecycleList(it)
-        }
-        viewModel.errorMsg.observe(this) {
-            if(it!= null) {
-                binding.tvEmptyOrError.visibility = View.VISIBLE
-                binding.tvEmptyOrError.text = it
+    }
+    private fun showSearchResult(result: com.nekkiichi.aplikasigithubuser.data.Result<List<UserItem>>) {
+        when(result) {
+            is Result.loading -> setLoading(true)
+            is Result.Error -> {
+                setLoading(false)
+                showErrMsg()
+            }
+            is Result.Success -> {
+                setLoading(false)
+                showRecycleList(result.data)
             }
         }
     }
@@ -55,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
     private fun showGithubUserDetails(data: UserDetail) {
-        val newIntent = Intent(this@HomeActivity,DetailsActivity::class.java)
+        val newIntent = Intent(this@HomeActivity, DetailsActivity::class.java)
         newIntent.putExtra(DetailsActivity.EXTRA_USER_DETAIL,data)
         startActivity(newIntent)
     }
@@ -66,6 +78,11 @@ class HomeActivity : AppCompatActivity() {
         }else {
             binding.progressBar.visibility = View.GONE
         }
+    }
+    private fun showErrMsg() {
+        binding.tvEmptyOrError.visibility = View.VISIBLE
+        binding.tvEmptyOrError.text = "Error Occurred"
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -94,15 +111,12 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.search-> {
+            R.id.search -> {
                 return true
             }
             else -> return false
         }
     }
 
-    private fun searchSetup() {
-
-    }
 }
 

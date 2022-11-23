@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.R
 import com.nekkiichi.aplikasigithubuser.databinding.GithubUserItemBinding
-import com.nekkiichi.aplikasigithubuser.datas.UserDetail
-import com.nekkiichi.aplikasigithubuser.datas.UserItem
-import com.nekkiichi.aplikasigithubuser.services.ApiWrapper
+import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
+import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
+import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiWrapper
 
 class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {

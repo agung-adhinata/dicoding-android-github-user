@@ -1,4 +1,4 @@
-package com.nekkiichi.aplikasigithubuser.services
+package com.nekkiichi.aplikasigithubuser.data.remote.services
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,8 +17,8 @@ class ApiConfig {
                 .baseUrl("https://api.github.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
-                .build();
-            return retrofit.create(ApiService::class.java);
+                .build()
+            return retrofit.create(ApiService::class.java)
         }
     }
 }

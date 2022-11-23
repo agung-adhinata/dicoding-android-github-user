@@ -1,20 +1,25 @@
-package com.nekkiichi.aplikasigithubuser
+package com.nekkiichi.aplikasigithubuser.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
+import com.nekkiichi.aplikasigithubuser.R
+import com.nekkiichi.aplikasigithubuser.adapter.SectionDetailPagerAdapter
 import com.nekkiichi.aplikasigithubuser.databinding.ActivityDetailsBinding
-import com.nekkiichi.aplikasigithubuser.datas.UserDetail
-import com.nekkiichi.aplikasigithubuser.datas.UserItem
-import com.nekkiichi.aplikasigithubuser.datas.models.DetailViewModel
+import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
+import com.nekkiichi.aplikasigithubuser.data.models.DetailViewModel
 
 class DetailsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_GITHUB_USER = "extra_github_user"
         const val EXTRA_USER_DETAIL = "extra_user_detail"
+        private val TAB_TITLES = intArrayOf(
+            R.string.followers,
+            R.string.following
+        )
     }
     lateinit var binding: ActivityDetailsBinding
     private val viewModel: DetailViewModel by viewModels()
@@ -24,9 +29,6 @@ class DetailsActivity : AppCompatActivity() {
 
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
         viewModel.userDetail.observe(this) {
             setGithubUserView(it)
         }
@@ -35,8 +37,16 @@ class DetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //intent receiver
-        val data = intent.getParcelableExtra<UserItem>(EXTRA_USER_DETAIL) as UserDetail
+        val data = intent.getParcelableExtra<UserDetail>(EXTRA_USER_DETAIL) as UserDetail
         viewModel.retrieveUserDetail(data)
+
+        //setup viewpager
+        val sectionDetailPagerAdapter = SectionDetailPagerAdapter(this,data.login.toString())
+        binding.vpFollow.adapter = sectionDetailPagerAdapter
+
+        TabLayoutMediator(binding.tabLayout,binding.vpFollow) { tab, pos-> tab.text = resources.getString(
+            TAB_TITLES[pos])
+        }.attach()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -49,24 +59,13 @@ class DetailsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     private fun setGithubUserView(data: UserDetail) {
-        binding.progressBar.visibility = View.GONE
         binding.tvGithubFullname.text = data.name
         binding.tvGithubFollowingCount.text = data.following.toString()
         binding.tvGithubFollowerCount.text = data.followers.toString()
         binding.tvGithubRepoCount.text = data.publicRepos.toString()
         binding.tvGithubUsername.text = data.login
-        binding.tvGithubUserLocation.text = data.location
+        binding.tvGithubUserLocation.text = data.location ?: "no location"
         Glide.with(this).load(data.avatarUrl).circleCrop().into(binding.ivGithubProfile)
     }
-    private fun showLoading(b: Boolean) {
-        if(b) {
-            binding.apply {
-                progressBar.visibility = View.VISIBLE
-            }
-        }else{
-            binding.apply {
-                progressBar.visibility = View.GONE
-            }
-        }
-    }
+
 }
