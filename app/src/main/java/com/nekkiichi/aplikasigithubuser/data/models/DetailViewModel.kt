@@ -8,12 +8,14 @@ import com.nekkiichi.aplikasigithubuser.data.UserRepository
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
 import com.nekkiichi.aplikasigithubuser.data.Result
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class DetailViewModel @Inject constructor(val repository: UserRepository) : ViewModel() {
     companion object {
         val TAG = "DetailViewOwner"

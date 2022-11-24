@@ -14,22 +14,25 @@ import retrofit2.http.Query
 interface ApiService {
     @Headers("Accept: application/vnd.github+json")
     @GET("search/users")
-    fun getListUsers(
+    suspend fun getListUsers(
         @Query("q") q: String,
         @Query("per_page") perPage: Int = 10
     ): ResponseUsers
     @Headers("Accept: application/vnd.github+json")
     @GET("users/{username}")
-    fun getUser(
+    suspend fun getUser(
         @Path("username") username: String
     ):UserDetail
+    suspend fun getUserFull(
+        @Path("username") username: String
+    ):Call<UserDetail>
 
 
     @Headers("Accept: application/vnd.github+json")
     @GET("users/{username}/followers")
-    fun getUserFollower(@Path("username") user: String): List<UserItem>
+    suspend fun getUserFollower(@Path("username") user: String): List<UserItem>
 
     @Headers("Accept: application/vnd.github+json")
     @GET("users/{username}/following")
-    fun getUserFollowing(@Path("username") user: String): List<UserItem>
+    suspend fun getUserFollowing(@Path("username") user: String): List<UserItem>
 }

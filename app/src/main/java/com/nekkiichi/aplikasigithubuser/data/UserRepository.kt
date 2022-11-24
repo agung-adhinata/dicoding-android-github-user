@@ -15,7 +15,7 @@ class UserRepository @Inject constructor (
     private val userDao: UserDao,
 
 ) {
-    fun searchUsers(username: String): Flow<com.nekkiichi.aplikasigithubuser.data.Result<List<UserItem>>> = flow {
+    fun searchUsers(username: String): Flow<Result<List<UserItem>>> = flow {
         emit(Result.loading)
         try {
             val res = apiService.getListUsers(username).items

@@ -1,6 +1,6 @@
 package com.nekkiichi.aplikasigithubuser.adapter
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +9,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.R
-import com.nekkiichi.aplikasigithubuser.databinding.GithubUserItemBinding
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
+import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiService
 import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiWrapper
+import com.nekkiichi.aplikasigithubuser.databinding.GithubUserItemBinding
+import kotlinx.coroutines.CoroutineScope
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import javax.inject.Inject
 
-class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
+class ListGithubUserAdapter (private val listGithubUser: List<UserItem>) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
+    @Inject
+    var apiService: ApiService? = null
 
     interface OnItemClickCallback {
         fun onItemClicked(data: UserDetail)
@@ -53,21 +61,6 @@ class ListGithubUserAdapter(private val listGithubUser: List<UserItem>) :
         holder.tvUsername.text = userItem.login
 
         Glide.with(holder.itemView.context).load(userItem.avatarUrl).into(holder.ivProfile)
-        ApiWrapper().getUserDetail(userItem.login.toString(),object : ApiWrapper.OnGetUserListener{
-            override fun onGetUserSuccess(item: UserDetail) {
-                Log.d("List", "done")
-                holder.tvFollowerCount.text = item.followers.toString()
-                holder.tvRepoCount.text = item.publicRepos.toString()
-                holder.itemView.setOnClickListener {
-                    onItemClickCallback.onItemClicked(item)
-                }
-            }
-
-            override fun onGetUserFailed(item: String) {
-                holder.tvFollowerCount.text = "error"
-                holder.tvRepoCount.text = "error"
-            }
-        })
     }
 
     override fun getItemCount(): Int {

@@ -16,8 +16,10 @@ import com.nekkiichi.aplikasigithubuser.databinding.FragmentFollowBinding
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
 import com.nekkiichi.aplikasigithubuser.data.models.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FollowFragment : Fragment() {
     private var username: String? = null
     private var isFollower = false

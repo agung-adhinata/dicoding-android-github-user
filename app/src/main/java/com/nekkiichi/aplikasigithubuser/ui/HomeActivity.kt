@@ -21,8 +21,10 @@ import com.nekkiichi.aplikasigithubuser.databinding.ActivityHomeBinding
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
 import com.nekkiichi.aplikasigithubuser.data.models.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
     private val viewModel: MainViewModel by viewModels()

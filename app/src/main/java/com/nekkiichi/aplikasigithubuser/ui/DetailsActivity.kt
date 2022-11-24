@@ -11,7 +11,9 @@ import com.nekkiichi.aplikasigithubuser.adapter.SectionDetailPagerAdapter
 import com.nekkiichi.aplikasigithubuser.databinding.ActivityDetailsBinding
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.models.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_GITHUB_USER = "extra_github_user"
