@@ -14,4 +14,6 @@
     <string name="blank" />
     <string name="search">search</string>
     <string name="search_hint">search username</string>
+    <string name="toggle_dark_mode">Toggle Dark Mode</string>
+    <string name="favourites">Favourites</string>
 </resources>

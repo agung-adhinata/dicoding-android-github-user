@@ -9,4 +9,12 @@
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always"
         tools:targetApi="o" />
+    <item
+        android:id="@+id/favourite"
+        android:title="@string/favourites"
+        />
+    <item
+        android:id="@+id/darkModeToggle"
+        android:title="@string/toggle_dark_mode"
+        />
 </menu>

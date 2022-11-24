@@ -12,7 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-
         <item name="android:textViewStyle">@style/JetBrainsMonoFontStyle</item>
     </style>
     <style name="AppTheme.noActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">

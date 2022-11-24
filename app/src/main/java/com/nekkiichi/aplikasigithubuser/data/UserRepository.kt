@@ -13,6 +13,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor (
     private val apiService: ApiService,
     private val userDao: UserDao,
+    private val preferences: AppReferences
 
 ) {
     fun searchUsers(username: String): Flow<Result<List<UserItem>>> = flow {
@@ -62,6 +63,11 @@ class UserRepository @Inject constructor (
     }
     suspend fun setUserAsFavourite(user: UserEntity) {
         userDao.insert(user)
+    }
+    fun getThemeSetting(): Flow<Boolean> = preferences.getTheme()
+
+    suspend fun setTheme(darkModeEnable: Boolean) {
+        preferences.saveThemeData(darkModeEnable)
     }
 
     companion object {
