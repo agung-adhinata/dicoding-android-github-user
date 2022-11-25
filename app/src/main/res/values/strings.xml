@@ -16,4 +16,9 @@
     <string name="search_hint">search username</string>
     <string name="toggle_dark_mode">Toggle Dark Mode</string>
     <string name="favourites">Favourites</string>
+    <string name="empty">Empty…</string>
+    <string name="splash_logo">Splash Logo</string>
+    <string name="error">error</string>
+    <string name="favo_clicked">Favourite clicked</string>
+    <string name="set_as_favourite">Set As Favourite</string>
 </resources>

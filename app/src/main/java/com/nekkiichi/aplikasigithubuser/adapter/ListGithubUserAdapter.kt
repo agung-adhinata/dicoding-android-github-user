@@ -3,28 +3,20 @@ package com.nekkiichi.aplikasigithubuser.adapter
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nekkiichi.aplikasigithubuser.R
 import com.nekkiichi.aplikasigithubuser.data.UserRepository
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserDetail
 import com.nekkiichi.aplikasigithubuser.data.remote.response.UserItem
-import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiService
 import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiWrapper
 import com.nekkiichi.aplikasigithubuser.databinding.GithubUserItemBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.collect
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
-class ListGithubUserAdapter (private val listGithubUser: List<UserItem>) :
+class ListGithubUserAdapter (private val listGithubUser: List<UserItem>, private val context: Context) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
     @Inject
     @JvmField
@@ -40,19 +32,17 @@ class ListGithubUserAdapter (private val listGithubUser: List<UserItem>) :
         this.onItemClickCallback = onItemClickCallback
     }
 
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var ivProfile: ImageView = itemView.findViewById(R.id.iv_github_profile)
-        var tvName: TextView = itemView.findViewById(R.id.tv_github_name)
-        var tvUsername: TextView = itemView.findViewById(R.id.tv_github_username)
-        var tvFollowerCount: TextView = itemView.findViewById(R.id.tv_github_follower_count)
-        var tvRepoCount: TextView = itemView.findViewById(R.id.tv_github_repo_count)
+    inner class ListViewHolder(itemView: GithubUserItemBinding) : RecyclerView.ViewHolder(itemView.root) {
+        var ivProfile: ImageView = itemView.ivGithubProfile
+        var tvName: TextView = itemView.tvGithubName
+        var tvUsername: TextView = itemView.tvGithubUsername
+        var tvFollowerCount: TextView = itemView.tvGithubFollowerCount
+        var tvRepoCount: TextView = itemView.tvGithubRepoCount
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = GithubUserItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.github_user_item, parent, false)
-        return ListViewHolder(view)
+        return ListViewHolder(binding)
     }
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val userItem = listGithubUser[position]
@@ -72,9 +62,9 @@ class ListGithubUserAdapter (private val listGithubUser: List<UserItem>) :
                 }
             }
             override fun onGetUserFailed(item: String) {
-                holder.tvRepoCount.text  = "error"
-                holder.tvFollowerCount.text = "error"
-                Log.d(TAG, "error : ${item}")
+                holder.tvRepoCount.text  = context.getString(R.string.error)
+                holder.tvFollowerCount.text = context.getString(R.string.error)
+                Log.d(TAG, "error : $item")
             }
         })
     }
@@ -84,6 +74,6 @@ class ListGithubUserAdapter (private val listGithubUser: List<UserItem>) :
     }
 
     companion object {
-        val TAG = "ListGithubUserAdapter"
+        const val TAG = "ListGithubUserAdapter"
     }
 }

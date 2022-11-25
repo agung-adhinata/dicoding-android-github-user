@@ -2,8 +2,11 @@ package com.nekkiichi.aplikasigithubuser.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.nekkiichi.aplikasigithubuser.R
@@ -16,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
     companion object {
-        const val EXTRA_GITHUB_USER = "extra_github_user"
         const val EXTRA_USER_DETAIL = "extra_user_detail"
         private val TAB_TITLES = intArrayOf(
             R.string.followers,
@@ -34,14 +36,15 @@ class DetailsActivity : AppCompatActivity() {
         viewModel.userDetail.observe(this) {
             setGithubUserView(it)
         }
+        viewModel.isFavourite.observe(this) {
+
+        }
         //action bar settings
         title = "User Detail"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         //intent receiver
         val data = intent.getParcelableExtra<UserDetail>(EXTRA_USER_DETAIL) as UserDetail
         viewModel.retrieveUserDetail(data)
-
         //setup viewpager
         val sectionDetailPagerAdapter = SectionDetailPagerAdapter(this,data.login.toString())
         binding.vpFollow.adapter = sectionDetailPagerAdapter
@@ -57,8 +60,33 @@ class DetailsActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+            R.id.favourite -> {
+                viewModel.toggleFavourite()
+                Toast.makeText(this, applicationContext.getText(R.string.favo_clicked), Toast.LENGTH_SHORT).show()
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+        val favouriteToggleMenu = menu?.findItem(R.id.favourite)
+        viewModel.isFavourite.observe(this) {
+            if(it){
+                favouriteToggleMenu?.icon = getDrawable(applicationContext,R.drawable.ic_baseline_favorite_24)
+            }
+            else {
+                favouriteToggleMenu?.icon = getDrawable(applicationContext,R.drawable.ic_baseline_favorite_border_24)
+            }
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.detail_menu,menu)
+
+        return super.onCreateOptionsMenu(menu)
     }
     private fun setGithubUserView(data: UserDetail) {
         binding.tvGithubFullname.text = data.name
@@ -69,5 +97,4 @@ class DetailsActivity : AppCompatActivity() {
         binding.tvGithubUserLocation.text = data.location ?: "no location"
         Glide.with(this).load(data.avatarUrl).circleCrop().into(binding.ivGithubProfile)
     }
-
 }

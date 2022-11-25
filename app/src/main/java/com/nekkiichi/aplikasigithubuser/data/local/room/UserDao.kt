@@ -21,9 +21,9 @@ interface UserDao {
     @Delete
     suspend fun delete(userEntity: UserEntity)
 
-    @Query("SELECT * FROM user ORDER BY id ASC")
+    @Query("SELECT * FROM user")
     fun getAllUser(): Flow<List<UserEntity>>
 
-    @Query ("SELECT EXISTS(SELECT * FROM user WHERE id = :id AND is_favorite = 1)")
-    fun isFavoriteUser(id: String): Flow<Boolean>
+    @Query ("SELECT EXISTS(SELECT * FROM user WHERE login = :login)")
+    fun isFavoriteUser(login: String): Flow<Boolean>
 }

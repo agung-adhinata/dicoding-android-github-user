@@ -10,7 +10,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val token = "Authorization: Bearer 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"
+const val token = "Authorization: Bearer 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"
 
 interface ApiService {
     @Headers("Accept: application/vnd.github+json", token)
@@ -19,12 +19,6 @@ interface ApiService {
         @Query("q") q: String,
         @Query("per_page") perPage: Int = 10
     ): ResponseUsers
-
-    @Headers("Accept: application/vnd.github+json", token)
-    @GET("users/{username}")
-    suspend fun getUser(
-        @Path("username") username: String
-    ):UserDetail
 
     @Headers("Accept: application/vnd.github+json", token)
     @GET("users/{username}")

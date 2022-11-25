@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -57,7 +56,7 @@ class FollowFragment : Fragment() {
                 launch {
                     if(isFollower) {
                         viewModel.userFollowerFlow.collect {
-                            retrieveData(it);
+                            retrieveData(it)
                         }
                     }else {
                         viewModel.userFollowingFlow.collect{
@@ -86,7 +85,7 @@ class FollowFragment : Fragment() {
     }
     private fun createRecycleView(data: List<UserItem>) {
         val layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL,false)
-        val listGithubUserAdapter = ListGithubUserAdapter(data)
+        val listGithubUserAdapter = ListGithubUserAdapter(data,requireContext().applicationContext)
         binding.rvListUserFollow.layoutManager = layoutManager
         binding.rvListUserFollow.adapter = listGithubUserAdapter
         listGithubUserAdapter.setOnItemClickCallback(object : ListGithubUserAdapter.OnItemClickCallback{

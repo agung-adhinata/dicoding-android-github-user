@@ -36,7 +36,6 @@ class HomeActivity : AppCompatActivity() {
     private var isDark: Boolean? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         lifecycleScope.launch {
@@ -73,7 +72,7 @@ class HomeActivity : AppCompatActivity() {
     //functions
     private fun showRecycleList(userList: List<UserItem>) {
         binding.rvGithubUsers.layoutManager = LinearLayoutManager(this)
-        val listGithubUserAdapter = ListGithubUserAdapter(userList)
+        val listGithubUserAdapter = ListGithubUserAdapter(userList, applicationContext)
         binding.rvGithubUsers.adapter = listGithubUserAdapter
         listGithubUserAdapter.setOnItemClickCallback(object :
             ListGithubUserAdapter.OnItemClickCallback {
@@ -101,7 +100,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showErrMsg() {
         binding.tvEmptyOrError.visibility = View.VISIBLE
-        binding.tvEmptyOrError.text = "Error Occurred"
+        binding.tvEmptyOrError.text = applicationContext.getString(R.string.error)
 
     }
 
@@ -128,16 +127,21 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when(item.itemId) {
             R.id.search -> {
-                return true
+                true
             }
             R.id.darkModeToggle -> {
                 Toast.makeText(this, "toggling", Toast.LENGTH_SHORT).show()
                 preferencesViewModel.saveThemeSetting(!isDark!!)
-                return true
+                true
             }
-            else -> return false
+            R.id.m_to_favourite -> {
+                val newIntent = Intent(this@HomeActivity, FavouriteActivity::class.java)
+                startActivity(newIntent)
+                true
+            }
+            else -> false
         }
     }
 

@@ -10,7 +10,7 @@
         app:showAsAction="always"
         tools:targetApi="o" />
     <item
-        android:id="@+id/favourite"
+        android:id="@+id/m_to_favourite"
         android:title="@string/favourites"
         />
     <item
