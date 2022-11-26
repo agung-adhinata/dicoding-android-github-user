@@ -9,64 +9,64 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UserRepository @Inject constructor (
+class UserRepository @Inject constructor(
     private val apiService: ApiService,
     private val userDao: UserDao,
     private val preferences: AppReferences
-
 ) {
     fun searchUsers(username: String): Flow<Result<List<UserItem>>> = flow {
         emit(Result.loading)
         try {
             val res = apiService.getListUsers(username).items
             emit(Result.Success(res))
-        }catch (e:Exception) {
+        } catch (e: Exception) {
             Log.d(TAG, "error when retrieve searchUsers: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
     }
-    fun convertUserEntityToUserItem(entities: List<UserEntity>): Flow<Result<List<UserItem>>> = flow {
+
+    fun convertUserEntityToUserItem(entities: List<UserEntity>): Flow<Result<List<UserItem>>> =
+        flow {
+            emit(Result.loading)
+            try {
+                val data = entities.map {
+                    UserItem(it.login, null, it.avatarUrl)
+                }
+                emit(Result.Success(data))
+            } catch (e: Exception) {
+                Log.d(TAG, "error when run GetUser: ${e.message.toString()}")
+                emit(Result.Error(e.message.toString()))
+            }
+
+        }
+
+    fun getFollowerOrFollowing(
+        username: String,
+        isFollower: Boolean
+    ): Flow<Result<List<UserItem>>> = flow {
         emit(Result.loading)
         try {
-            val data = entities.map {
-                UserItem(it.login,null,it.avatarUrl)
-            }
-            emit(Result.Success(data))
+            val res =
+                if (isFollower) apiService.getUserFollower(username) else apiService.getUserFollowing(
+                    username
+                )
+            emit(Result.Success(res))
         } catch (e: Exception) {
-            Log.d(TAG, "error when run GetUser: ${e.message.toString()}")
+            Log.d(TAG, "error when run getFollowerOrFollowing: ${e.message.toString()}")
             emit(Result.Error(e.message.toString()))
         }
-
     }
 
-    fun getFollowerOrFollowing(username: String, isFollower: Boolean) :Flow<Result<List<UserItem>>> = flow {
-        emit(Result.loading)
-        if (isFollower) {
-            try {
-                val res = apiService.getUserFollower(username)
-                emit(Result.Success(res))
-            }catch (e: Exception) {
-                Log.d(TAG, "error when run getFollowerOrFollowing: ${e.message.toString()}")
-                emit(Result.Error(e.message.toString()))
-            }
-        }else{
-            try {
-                val res = apiService.getUserFollowing(username)
-                emit(Result.Success(res))
-            }catch (e: Exception) {
-                Log.d(TAG, "error when run getFollowerOrFollowing: ${e.message.toString()}")
-                emit(Result.Error(e.message.toString()))
-            }
-        }
-    }
     fun isFavoriteUser(login: String): Flow<Boolean> = userDao.isFavoriteUser(login)
     fun getAllSavedUser(): Flow<List<UserEntity>> = userDao.getAllUser()
     suspend fun deleteUserFromFavourite(user: UserEntity) {
         userDao.delete(user)
     }
+
     suspend fun setUserAsFavourite(user: UserEntity) {
         userDao.insert(user)
     }
+
     fun getThemeSetting(): Flow<Boolean> = preferences.getTheme()
 
     suspend fun setTheme(darkModeEnable: Boolean) {

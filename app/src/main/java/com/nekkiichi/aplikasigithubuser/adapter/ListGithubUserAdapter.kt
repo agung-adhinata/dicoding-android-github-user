@@ -19,8 +19,7 @@ import javax.inject.Inject
 class ListGithubUserAdapter (private val listGithubUser: List<UserItem>, private val context: Context) :
     RecyclerView.Adapter<ListGithubUserAdapter.ListViewHolder>() {
     @Inject
-    @JvmField
-    var repository: UserRepository? = null
+    lateinit var repository: UserRepository
 
     interface OnItemClickCallback {
         fun onItemClicked(data: UserDetail)

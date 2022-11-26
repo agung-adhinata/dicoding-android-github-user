@@ -1,5 +1,6 @@
 package com.nekkiichi.aplikasigithubuser.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -79,7 +80,12 @@ class FollowFragment : Fragment() {
             is com.nekkiichi.aplikasigithubuser.data.Result.Success ->
             {
                 showLoading(false)
-                createRecycleView(data.data)
+                if(data.data.isEmpty()) {
+                    binding.tvEmptyFragment.visibility = View.VISIBLE
+                    createRecycleView(listOf())
+                }else{
+                    createRecycleView(data.data)
+                }
             }
         }
     }
@@ -90,13 +96,16 @@ class FollowFragment : Fragment() {
         binding.rvListUserFollow.adapter = listGithubUserAdapter
         listGithubUserAdapter.setOnItemClickCallback(object : ListGithubUserAdapter.OnItemClickCallback{
             override fun onItemClicked(data: UserDetail) {
-                TODO("Not yet implemented")
+                val newIntent = Intent(activity, DetailsActivity::class.java)
+                newIntent.putExtra(DetailsActivity.EXTRA_USER_DETAIL, data)
+                startActivity(newIntent)
             }
         })
 
     }
     private fun showLoading(b: Boolean) {
         if (b) {
+            binding.tvEmptyFragment.visibility = View.GONE
             binding.progressBar2.visibility = View.VISIBLE
         }else {
             binding.progressBar2.visibility = View.GONE

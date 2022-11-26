@@ -1,5 +1,7 @@
-package com.nekkiichi.aplikasigithubuser.data.remote.services
+package com.nekkiichi.aplikasigithubuser.di
 
+import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiConfig
+import com.nekkiichi.aplikasigithubuser.data.remote.services.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

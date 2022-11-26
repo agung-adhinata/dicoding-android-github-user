@@ -1,7 +1,9 @@
-package com.nekkiichi.aplikasigithubuser.data.local.room
+package com.nekkiichi.aplikasigithubuser.di
 
 import android.content.Context
 import androidx.room.Room
+import com.nekkiichi.aplikasigithubuser.data.local.room.UserDao
+import com.nekkiichi.aplikasigithubuser.data.local.room.UserDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +18,7 @@ class UserModule {
         return userDb.userDao()
     }
     @Provides
-    fun provideUserDatabase(@ApplicationContext appContext: Context):UserDb {
-        return Room.databaseBuilder(appContext,UserDb::class.java, "userFavourite").fallbackToDestructiveMigration().build()
+    fun provideUserDatabase(@ApplicationContext appContext: Context): UserDb {
+        return Room.databaseBuilder(appContext, UserDb::class.java, "userFavourite").fallbackToDestructiveMigration().build()
     }
 }

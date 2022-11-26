@@ -10,7 +10,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val token = "Authorization: Bearer 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"
+const val token = "Authorization: Bearer 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"
 
 interface ApiService {
     @Headers("Accept: application/vnd.github+json", token)
